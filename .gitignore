@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/WeatherForecasting.WebApi/WeatherForecasting.WebApi.http
+/WeatherForecasting.WebApi/http-client.env.json
