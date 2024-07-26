@@ -22,16 +22,18 @@ namespace WeatherForecasting.WebApi.Controllers
 		}
 
 		[HttpGet(Name = "GetWeatherForecast")]
-		public async Task<WeatherForecastResponse> GetWeatherForecast()
+		public async Task<WeatherForecastResponse> GetWeatherForecast(decimal latitude, decimal longitude)
 		{
 			_logger.LogInformation("Requesting forecast");
-			var query = BuildRequestQuery(10, 10, _settings.ApiKey);
+			var query = BuildRequestQuery(latitude, longitude, _settings.ApiKey);
 			var response = await _client.GetAsync(query);
 
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			return JsonSerializer.Deserialize<WeatherForecastResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+			var result = JsonSerializer.Deserialize<WeatherForecastResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+			return result;
 		}
 
 		private string BuildRequestQuery(decimal latitude, decimal longitude, string apiKey)

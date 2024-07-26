@@ -22,9 +22,10 @@ namespace WeatherForecasting.WebApi.Controllers
 		}
 
 		[HttpGet(Name = "GetCurrentWeather")]
-		public async Task<CurrentWeatherResponse> GetCurrentWeather()
+		public async Task<CurrentWeatherResponse> GetCurrentWeather(decimal latitude, decimal longitude)
 		{
-			var query = BuildRequestQuery(10, 10, _settings.ApiKey);
+			_logger.LogInformation("Requesting current weather");
+			var query = BuildRequestQuery(latitude, longitude, _settings.ApiKey);
 			var response = await _client.GetAsync(query);
 			
 			response.EnsureSuccessStatusCode();
