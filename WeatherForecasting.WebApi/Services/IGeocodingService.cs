@@ -5,6 +5,6 @@ namespace WeatherForecasting.WebApi.Services
 {
 	public interface IGeocodingService
 	{
-		public GeocodingResponse GetCoordinatesByLocation(GeocodingRequest request);
+		public Task<GeocodingResponse> GetGeocodingCoordinatesByLocationAsync(GeocodingRequest request);
 	}
 }

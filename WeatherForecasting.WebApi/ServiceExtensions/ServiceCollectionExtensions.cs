@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace WeatherForecasting.WebApi.ServiceExtensions
 {
@@ -11,7 +10,7 @@ namespace WeatherForecasting.WebApi.ServiceExtensions
 			{
 				var settings = serviceProvider.GetRequiredService<IOptions<OpenWeatherMapSettings>>().Value;
 				var baseUri = new Uri(settings.BaseUri);
-				client.BaseAddress = new Uri(baseUri, relativeUri: "forecast");
+				client.BaseAddress = new Uri(baseUri, relativeUri: "data/2.5/forecast");
 			});
 		}
 
@@ -21,7 +20,7 @@ namespace WeatherForecasting.WebApi.ServiceExtensions
 			{
 				var settings = serviceProvider.GetRequiredService<IOptions<OpenWeatherMapSettings>>().Value;
 				var baseUri = new Uri(settings.BaseUri);
-				client.BaseAddress = new Uri(baseUri, relativeUri: "weather");
+				client.BaseAddress = new Uri(baseUri, relativeUri: "data/2.5/weather");
 			});
 		}
 
@@ -31,7 +30,7 @@ namespace WeatherForecasting.WebApi.ServiceExtensions
 			{
 				var settings = serviceProvider.GetRequiredService<IOptions<OpenWeatherMapSettings>>().Value;
 				var baseUri = new Uri(settings.BaseUri);
-				client.BaseAddress = new Uri(baseUri, relativeUri: "geo");
+				client.BaseAddress = new Uri(baseUri, relativeUri: "geo/1.0/direct");
 			});
 		}
 	}

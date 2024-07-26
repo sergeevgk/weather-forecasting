@@ -60,7 +60,7 @@ namespace WeatherForecasting.WebApi.Controllers
 		[HttpGet(Name = "GetWeatherForecast")]
 		public async Task<WeatherForecastResponse> ByLocation(string city, string state = "", string countryCode = "", int limit = FORECAST_RESPONSE_ITEMS_LIMIT)
 		{
-			_logger.LogInformation("Requesting forecast");
+			_logger.LogInformation($"{nameof(WeatherForecastController)}. Start request {nameof(ByLocation)}");
 
 			if (limit < 1 || limit > FORECAST_RESPONSE_ITEMS_LIMIT)
 			{
@@ -68,13 +68,15 @@ namespace WeatherForecasting.WebApi.Controllers
 				_logger.LogInformation($"Request limit was adjusted to {limit}.");
 			}
 
-			var geocodingRequest = new GeocodingRequest(city, state, countryCode);
+			var geocodingRequest = new GeocodingRequest(city, state, countryCode, Limit: 1);
 			// TODO: add validation?
-			var geocodingReponse = _geoService.GetCoordinatesByLocation(geocodingRequest);
+			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
 			var forecastRequest = new WeatherForecastRequest(geocodingReponse.Lat, geocodingReponse.Lon, limit);
+			// TODO: add validation?
 			var result = await _forecastService.GetWeatherForecastAsync(forecastRequest);
 
+			_logger.LogInformation($"{nameof(WeatherForecastController)}. Finish request {nameof(ByLocation)}");
 			return result;
 		}
 	}

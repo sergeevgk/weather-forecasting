@@ -55,11 +55,12 @@ namespace WeatherForecasting.WebApi.Controllers
 		{
 			_logger.LogInformation($"{nameof(WeatherStatusController)}. Start request {nameof(ByLocation)}");
 
-			var geocodingRequest = new GeocodingRequest(city, state, countryCode);
+			var geocodingRequest = new GeocodingRequest(city, state, countryCode, Limit: 1);
 			// TODO: add validation?
-			var geocodingReponse = _geoService.GetCoordinatesByLocation(geocodingRequest);
+			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
 			var statusRequest = new WeatherStatusRequest(geocodingReponse.Lat, geocodingReponse.Lon);
+			// TODO: add validation?
 			var result = await _statusService.GetWeatherStatusAsync(statusRequest);
 
 			_logger.LogInformation($"{nameof(WeatherStatusController)}. Finish request {nameof(ByLocation)}");
