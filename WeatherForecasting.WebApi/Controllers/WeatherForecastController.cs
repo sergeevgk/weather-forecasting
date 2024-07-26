@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
+using WeatherForecasting.WebApi.Models.Requests;
 using WeatherForecasting.WebApi.Models.Response;
 
 namespace WeatherForecasting.WebApi.Controllers
@@ -21,13 +22,14 @@ namespace WeatherForecasting.WebApi.Controllers
 			_settings = settings.Value;
 		}
 
-		[HttpGet(Name = "GetWeatherForecast")]
-		public async Task<WeatherForecastResponse> GetWeatherForecast(decimal latitude, decimal longitude)
+		[HttpGet("ByCoordinates", Name = "GetWeatherForecastByCoordinates")]
+		public async Task<WeatherForecastResponse> ByCoordinates(decimal latitude, decimal longitude, int limit = 40)
 		{
 			_logger.LogInformation("Requesting forecast");
-			var query = BuildRequestQuery(latitude, longitude, _settings.ApiKey);
-			var response = await _client.GetAsync(query);
+			var request = new WeatherForecastRequest(latitude, longitude, limit);
+			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary(), limit, _settings.ApiKey);
 
+			var response = await _client.GetAsync(queryString);
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
@@ -36,16 +38,28 @@ namespace WeatherForecasting.WebApi.Controllers
 			return result;
 		}
 
-		private string BuildRequestQuery(decimal latitude, decimal longitude, string apiKey)
+		[HttpGet(Name = "GetWeatherForecast")]
+		public async Task<WeatherForecastResponse> ByLocation(string city, string state = "", string countryCode = "", int limit = 40)
 		{
-			var queryParameterDictionary = new Dictionary<string, string>()
-			{
-				{ "lat", latitude.ToString("N2") },
-				{ "lon", longitude.ToString("N2") },
-				{ "appid", apiKey }
+			_logger.LogInformation("Requesting forecast");
+			var request = new GeoRequest(city, state, countryCode);
+			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary(), limit, _settings.ApiKey);
 
-			};
-			var result = QueryHelpers.AddQueryString("", queryParameterDictionary);
+			var response = await _client.GetAsync(queryString);
+			response.EnsureSuccessStatusCode();
+
+			var content = await response.Content.ReadAsStringAsync();
+			var result = JsonSerializer.Deserialize<WeatherForecastResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+			return result;
+		}
+
+		private string BuildRequestQueryString(Dictionary<string, string> queryParameters, int forecastsLimit, string apiKey)
+		{
+			queryParameters.Add("appid", _settings.ApiKey);
+			queryParameters.Add("cnt", forecastsLimit.ToString());
+			var result = QueryHelpers.AddQueryString("", queryParameters);
+
 			return result;
 		}
 	}
