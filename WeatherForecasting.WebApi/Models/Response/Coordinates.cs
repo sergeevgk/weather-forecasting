@@ -2,7 +2,7 @@
 
 using System.Text.Json.Serialization;
 
-public class Coord
+public class Coordinates
 {
 	[JsonPropertyName("lon")]
 	public double Lon { get; set; }

@@ -2,10 +2,10 @@
 
 namespace WeatherForecasting.WebApi.Models.Response
 {
-	public class WeatherResponse
+	public class CurrentWeatherResponse
 	{
 		[JsonPropertyName("coord")]
-		public Coord Coord { get; set; }
+		public Coordinates Coord { get; set; }
 
 		[JsonPropertyName("weather")]
 		public List<Weather> Weather { get; set; }
@@ -26,7 +26,7 @@ namespace WeatherForecasting.WebApi.Models.Response
 		public Clouds Clouds { get; set; }
 
 		[JsonPropertyName("dt")]
-		public long Dt { get; set; }
+		public long UnixTimestampUtc { get; set; }
 
 		[JsonPropertyName("sys")]
 		public SysInformation Sys { get; set; }

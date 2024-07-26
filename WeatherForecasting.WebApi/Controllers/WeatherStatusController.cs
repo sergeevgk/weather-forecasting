@@ -22,7 +22,7 @@ namespace WeatherForecasting.WebApi.Controllers
 		}
 
 		[HttpGet(Name = "GetCurrentWeather")]
-		public async Task<WeatherResponse> GetCurrentWeather()
+		public async Task<CurrentWeatherResponse> GetCurrentWeather()
 		{
 			var query = BuildRequestQuery(10, 10, _settings.ApiKey);
 			var response = await _client.GetAsync(query);
@@ -30,7 +30,7 @@ namespace WeatherForecasting.WebApi.Controllers
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<WeatherResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+			var result = JsonSerializer.Deserialize<CurrentWeatherResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
 			return result;
 		}
