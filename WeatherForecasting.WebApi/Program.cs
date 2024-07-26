@@ -2,6 +2,7 @@ using FluentValidation;
 using WeatherForecasting.WebApi;
 using WeatherForecasting.WebApi.Models.Requests;
 using WeatherForecasting.WebApi.ServiceExtensions;
+using WeatherForecasting.WebApi.Services;
 using WeatherForecasting.WebApi.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddWeatherForecastingHttpClient();
 builder.Services.AddWeatherStatusHttpClient();
+builder.Services.AddGeocodingHttpClient();
+
+builder.Services.AddScoped<IWeatherStatusService, WeatherStatusService>();
+builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<WeatherRequestValidator>();
 

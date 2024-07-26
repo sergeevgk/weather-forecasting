@@ -5,8 +5,8 @@ using System.Text.Json.Serialization;
 public class Coordinates
 {
 	[JsonPropertyName("lon")]
-	public double Lon { get; set; }
+	public decimal Lon { get; set; }
 
 	[JsonPropertyName("lat")]
-	public double Lat { get; set; }
+	public decimal Lat { get; set; }
 }

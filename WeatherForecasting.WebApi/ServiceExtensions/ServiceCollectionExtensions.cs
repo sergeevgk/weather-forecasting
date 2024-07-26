@@ -24,5 +24,15 @@ namespace WeatherForecasting.WebApi.ServiceExtensions
 				client.BaseAddress = new Uri(baseUri, relativeUri: "weather");
 			});
 		}
+
+		public static void AddGeocodingHttpClient(this IServiceCollection services)
+		{
+			services.AddHttpClient("GeocodingClient", (serviceProvider, client) =>
+			{
+				var settings = serviceProvider.GetRequiredService<IOptions<OpenWeatherMapSettings>>().Value;
+				var baseUri = new Uri(settings.BaseUri);
+				client.BaseAddress = new Uri(baseUri, relativeUri: "geo");
+			});
+		}
 	}
 }

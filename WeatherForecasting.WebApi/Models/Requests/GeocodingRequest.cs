@@ -1,6 +1,6 @@
 ﻿namespace WeatherForecasting.WebApi.Models.Requests
 {
-	public record GeoRequest(string CityName, string StateCode, string CountryCode) : IQueryParametersRequest
+	public record GeocodingRequest(string CityName, string StateCode, string CountryCode) : IQueryParametersRequest
 	{
 		public Dictionary<string, string> ToQueryParametersDictionary()
 		{

@@ -1,12 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
 using System.Net;
-using System.Text.Json;
 using WeatherForecasting.WebApi.Models.Requests;
 using WeatherForecasting.WebApi.Models.Response;
+using WeatherForecasting.WebApi.Services;
 
 namespace WeatherForecasting.WebApi.Controllers
 {
@@ -16,15 +14,15 @@ namespace WeatherForecasting.WebApi.Controllers
 	{
 		private const int FORECAST_RESPONSE_ITEMS_LIMIT = 40;
 		private readonly ILogger<WeatherForecastController> _logger;
-		private readonly HttpClient _client;
-		private readonly OpenWeatherMapSettings _settings;
 		private readonly IValidator<BaseWeatherRequest> _validator;
+		private readonly IWeatherForecastService _forecastService;
+		private readonly IGeocodingService _geoService;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings, IValidator<BaseWeatherRequest> validator)
+		public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService forecastService, IGeocodingService geoService, IValidator<BaseWeatherRequest> validator)
 		{
+			_forecastService = forecastService ?? throw new ArgumentNullException(nameof(forecastService));
+			_geoService = geoService ?? throw new ArgumentNullException(nameof(geoService));
 			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
-			_client = httpClientFactory?.CreateClient("WeatherForecastClient") ?? throw new ArgumentNullException(nameof(httpClientFactory));
-			_settings = settings.Value;
 			_validator = validator;
 		}
 
@@ -33,7 +31,7 @@ namespace WeatherForecasting.WebApi.Controllers
 		[HttpGet("ByCoordinates", Name = "GetWeatherForecastByCoordinates")]
 		public async Task<Results<BadRequest<string>, Ok<WeatherForecastResponse>>> ByCoordinates(decimal latitude, decimal longitude, int limit = FORECAST_RESPONSE_ITEMS_LIMIT)
 		{
-			_logger.LogInformation("Requesting forecast");
+			_logger.LogInformation($"{nameof(WeatherForecastController)}. Start request {nameof(ByCoordinates)}");
 
 			if (limit < 1 || limit > FORECAST_RESPONSE_ITEMS_LIMIT)
 			{
@@ -51,14 +49,9 @@ namespace WeatherForecasting.WebApi.Controllers
 				return badResponseResult;
 			}
 
-			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary(), limit, _settings.ApiKey);
+			var result = await _forecastService.GetWeatherForecastAsync(request);
 
-			var response = await _client.GetAsync(queryString);
-			response.EnsureSuccessStatusCode();
-
-			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<WeatherForecastResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+			_logger.LogInformation($"{nameof(WeatherForecastController)}. Finish request {nameof(ByCoordinates)}");
 			return TypedResults.Ok(result);
 		}
 
@@ -75,23 +68,12 @@ namespace WeatherForecasting.WebApi.Controllers
 				_logger.LogInformation($"Request limit was adjusted to {limit}.");
 			}
 
-			var request = new GeoRequest(city, state, countryCode);
-			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary(), limit, _settings.ApiKey);
+			var geocodingRequest = new GeocodingRequest(city, state, countryCode);
+			// TODO: add validation?
+			var geocodingReponse = _geoService.GetCoordinatesByLocation(geocodingRequest);
 
-			var response = await _client.GetAsync(queryString);
-			response.EnsureSuccessStatusCode();
-
-			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<WeatherForecastResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-			return result;
-		}
-
-		private string BuildRequestQueryString(Dictionary<string, string> queryParameters, int forecastsLimit, string apiKey)
-		{
-			queryParameters.Add("appid", _settings.ApiKey);
-			queryParameters.Add("cnt", forecastsLimit.ToString());
-			var result = QueryHelpers.AddQueryString("", queryParameters);
+			var forecastRequest = new WeatherForecastRequest(geocodingReponse.Lat, geocodingReponse.Lon, limit);
+			var result = await _forecastService.GetWeatherForecastAsync(forecastRequest);
 
 			return result;
 		}
