@@ -2,7 +2,7 @@
 
 namespace WeatherForecasting.WebApi.Models.Response
 {
-	public class CurrentWeatherResponse
+	public class WeatherStatusResponse
 	{
 		[JsonPropertyName("coord")]
 		public Coordinates Coord { get; set; }

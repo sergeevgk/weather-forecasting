@@ -27,10 +27,10 @@ namespace WeatherForecasting.WebApi.Controllers
 			_validator = validator;
 		}
 
-		[ProducesResponseType(typeof(CurrentWeatherResponse), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(WeatherStatusResponse), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
 		[HttpGet("ByCoordinates", Name = "GetWeatherStatusByCoordinates")]
-		public async Task<Results<BadRequest<string>, Ok<CurrentWeatherResponse>>> ByCoordinates(decimal latitude, decimal longitude)
+		public async Task<Results<BadRequest<string>, Ok<WeatherStatusResponse>>> ByCoordinates(decimal latitude, decimal longitude)
 		{
 			_logger.LogInformation("Requesting current weather");
 
@@ -50,15 +50,15 @@ namespace WeatherForecasting.WebApi.Controllers
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<CurrentWeatherResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+			var result = JsonSerializer.Deserialize<WeatherStatusResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
 			return TypedResults.Ok(result);
 		}
 
-		[ProducesResponseType(typeof(CurrentWeatherResponse), (int)HttpStatusCode.OK)]
+		[ProducesResponseType(typeof(WeatherStatusResponse), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
 		[HttpGet(Name = "GetWeatherStatus")]
-		public async Task<CurrentWeatherResponse> ByLocation(string city, string state = "", string countryCode = "")
+		public async Task<WeatherStatusResponse> ByLocation(string city, string state = "", string countryCode = "")
 		{
 			_logger.LogInformation("Requesting current weather");
 			var request = new GeoRequest(city, state, countryCode);
@@ -68,7 +68,7 @@ namespace WeatherForecasting.WebApi.Controllers
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<CurrentWeatherResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+			var result = JsonSerializer.Deserialize<WeatherStatusResponse>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
 			return result;
 		}
