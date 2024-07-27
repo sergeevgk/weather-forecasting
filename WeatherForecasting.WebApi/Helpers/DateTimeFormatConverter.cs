@@ -2,9 +2,9 @@
 
 namespace WeatherForecasting.WebApi.Helpers
 {
-	public class DateFormatConverter : IsoDateTimeConverter
+	public class DateTimeFormatConverter : IsoDateTimeConverter
 	{
-		public DateFormatConverter(string format)
+		public DateTimeFormatConverter(string format)
 		{
 			DateTimeFormat = format;
 		}

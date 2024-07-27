@@ -29,11 +29,14 @@ namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 		[JsonProperty("rain")]
 		public Rain Rain { get; set; }
 
+		[JsonProperty("snow")]
+		public Snow Snow { get; set; }
+
 		[JsonProperty("sys")]
 		public SysInformation Sys { get; set; }
 
 		[JsonProperty("dt_txt")]
-		[JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd HH:mm:ss")]
+		[JsonConverter(typeof(DateTimeFormatConverter), "yyyy-MM-dd HH:mm:ss")]
 		public DateTime ForecastDateTime { get; set; }
 	}
 }

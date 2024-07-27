@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+using WeatherForecasting.WebApi.Models.Contract.Response;
 
 namespace WeatherForecasting.WebApi.Services
 {
@@ -12,15 +14,17 @@ namespace WeatherForecasting.WebApi.Services
 		private readonly ILogger<WeatherStatusService> _logger;
 		private readonly HttpClient _client;
 		private readonly OpenWeatherMapSettings _settings;
+		private readonly IMapper _mapper;
 
-		public WeatherStatusService(ILogger<WeatherStatusService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings)
+		public WeatherStatusService(ILogger<WeatherStatusService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings, IMapper mapper)
 		{
 			_client = httpClientFactory?.CreateClient("WeatherStatusClient") ?? throw new ArgumentNullException(nameof(httpClientFactory));
-			_logger = logger;
-			_settings = settings.Value;
+			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
+			_settings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
+			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 		}
 
-		public async Task<WeatherStatusResponse> GetWeatherStatusAsync(WeatherStatusRequest request)
+		public async Task<Models.Contract.Response.WeatherStatusResponse> GetWeatherStatusAsync(WeatherStatusRequest request)
 		{
 			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary());
 
@@ -28,8 +32,9 @@ namespace WeatherForecasting.WebApi.Services
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var result = JsonSerializer.Deserialize<WeatherStatusResponse>(content, _serializationOptions);
+			var weatherStatusReponse = JsonSerializer.Deserialize<Models.OpenWeatherMap.Response.WeatherStatusResponse>(content, _serializationOptions);
 
+			var result = _mapper.Map<Models.Contract.Response.WeatherStatusResponse>(weatherStatusReponse);
 			return result;
 		}
 		private string BuildRequestQueryString(Dictionary<string, string> queryParameters)

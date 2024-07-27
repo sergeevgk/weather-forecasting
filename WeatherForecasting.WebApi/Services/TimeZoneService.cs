@@ -9,7 +9,7 @@ namespace WeatherForecasting.WebApi.Services
 		{
 			string timeZoneIana = TimeZoneLookup.GetTimeZone((double)latitude, (double)longitude).Result;
 			TimeZoneInfo tzInfo = TZConvert.GetTimeZoneInfo(timeZoneIana);
-			var result = TimeZoneInfo.ConvertTime(utcDateTime, tzInfo);
+			var result = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, tzInfo);
 
 			return result;
 		}

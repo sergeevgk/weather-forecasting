@@ -2,7 +2,7 @@
 
 namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
-	public class Rain
+	public class Snow
 	{
 		[JsonPropertyName("3h")]
 		public double VolumeThreeHour { get; set; }

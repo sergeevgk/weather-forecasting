@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
@@ -30,6 +31,13 @@ namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 
 		[JsonPropertyName("sys")]
 		public SysInformation Sys { get; set; }
+
+		[JsonProperty("rain")]
+		public Rain Rain { get; set; }
+
+		[JsonProperty("snow")]
+		public Snow Snow { get; set; }
+
 
 		[JsonPropertyName("timezone")]
 		public int Timezone { get; set; }

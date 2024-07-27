@@ -1,5 +1,6 @@
 using FluentValidation;
 using WeatherForecasting.WebApi;
+using WeatherForecasting.WebApi.Mapping;
 using WeatherForecasting.WebApi.ServiceExtensions;
 using WeatherForecasting.WebApi.Services;
 using WeatherForecasting.WebApi.Validation;
@@ -32,6 +33,8 @@ builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<WeatherRequestValidator>();
+
+builder.Services.AddAutoMapper(typeof(WeatherMappingProfile));
 
 var app = builder.Build();
 

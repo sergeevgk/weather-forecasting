@@ -30,7 +30,7 @@ namespace WeatherForecasting.WebApi.Controllers
 		[ProducesResponseType(typeof(WeatherStatusResponse), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
 		[HttpGet("ByCoordinates", Name = "GetWeatherStatusByCoordinates")]
-		public async Task<Results<BadRequest<string>, Ok<WeatherStatusResponse>>> ByCoordinates(decimal latitude, decimal longitude)
+		public async Task<Results<BadRequest<string>, Ok<Models.Contract.Response.WeatherStatusResponse>>> ByCoordinates(decimal latitude, decimal longitude)
 		{
 			_logger.LogInformation($"{nameof(WeatherStatusController)}. Start request {nameof(ByCoordinates)}");
 
@@ -53,11 +53,11 @@ namespace WeatherForecasting.WebApi.Controllers
 		[ProducesResponseType(typeof(WeatherStatusResponse), (int)HttpStatusCode.OK)]
 		[ProducesResponseType((int)HttpStatusCode.BadRequest)]
 		[HttpGet(Name = "GetWeatherStatus")]
-		public async Task<Results<BadRequest<string>, Ok<WeatherStatusResponse>>> ByLocation(string city, string state = "", string countryCode = "")
+		public async Task<Results<BadRequest<string>, Ok<Models.Contract.Response.WeatherStatusResponse>>> ByLocation(string city, string stateCode = "", string countryCode = "")
 		{
 			_logger.LogInformation($"{nameof(WeatherStatusController)}. Start request {nameof(ByLocation)}");
 
-			var geocodingRequest = new GeocodingRequest(city, state, countryCode, Limit: 1);
+			var geocodingRequest = new GeocodingRequest(city, stateCode, countryCode, Limit: 1);
 			var validationResult = _geoValidator.Validate(geocodingRequest);
 			if (!validationResult.IsValid)
 			{
