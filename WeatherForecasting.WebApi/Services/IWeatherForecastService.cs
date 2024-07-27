@@ -1,10 +1,9 @@
-﻿using WeatherForecasting.WebApi.Models.Requests;
-using WeatherForecasting.WebApi.Models.Response;
+﻿using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
+using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
-namespace WeatherForecasting.WebApi.Services
+namespace WeatherForecasting.WebApi.Services;
+
+public interface IWeatherForecastService
 {
-	public interface IWeatherForecastService
-	{
-		public Task<WeatherForecastResponse> GetWeatherForecastAsync(WeatherForecastRequest request);
-	}
+	public Task<WeatherForecastResponse> GetWeatherForecastAsync(WeatherForecastRequest request);
 }

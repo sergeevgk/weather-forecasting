@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using WeatherForecasting.WebApi.Models.Requests;
+using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 
 namespace WeatherForecasting.WebApi.Validation
 {

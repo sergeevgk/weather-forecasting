@@ -1,4 +1,4 @@
-﻿namespace WeatherForecasting.WebApi.Models.Requests
+﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Request
 {
 	public record BaseWeatherRequest(decimal Latitude, decimal Longitude) : IQueryParametersRequest
 	{

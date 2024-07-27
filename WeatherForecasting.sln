@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecasting.AppHost", "WeatherForecasting.AppHost\WeatherForecasting.AppHost.csproj", "{0150D858-9057-4720-AB2B-44B1CA72B7A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecasting.AppHost", "WeatherForecasting.AppHost\WeatherForecasting.AppHost.csproj", "{0150D858-9057-4720-AB2B-44B1CA72B7A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecasting.ServiceDefaults", "WeatherForecasting.ServiceDefaults\WeatherForecasting.ServiceDefaults.csproj", "{D22DC3EC-D27B-44D2-B0B5-7433DF034BB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecasting.WebApi", "WeatherForecasting.WebApi\WeatherForecasting.WebApi.csproj", "{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecasting.WebApi", "WeatherForecasting.WebApi\WeatherForecasting.WebApi.csproj", "{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

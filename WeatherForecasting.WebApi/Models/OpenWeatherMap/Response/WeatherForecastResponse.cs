@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
 
-namespace WeatherForecasting.WebApi.Models.Response
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
 	public class WeatherForecastResponse
 	{
@@ -15,7 +15,7 @@ namespace WeatherForecasting.WebApi.Models.Response
 		public int Cnt { get; set; }
 
 		[JsonPropertyName("list")]
-		public List<WeatherForecast> List { get; set; }
+		public List<WeatherForecastItem> List { get; set; }
 
 		[JsonPropertyName("city")]
 		public City City { get; set; }

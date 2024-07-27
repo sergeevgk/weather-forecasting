@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WeatherForecasting.WebApi.Models.Response
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
 	public class WeatherStatusResponse
 	{

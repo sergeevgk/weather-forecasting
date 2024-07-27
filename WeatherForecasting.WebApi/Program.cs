@@ -1,6 +1,5 @@
 using FluentValidation;
 using WeatherForecasting.WebApi;
-using WeatherForecasting.WebApi.Models.Requests;
 using WeatherForecasting.WebApi.ServiceExtensions;
 using WeatherForecasting.WebApi.Services;
 using WeatherForecasting.WebApi.Validation;

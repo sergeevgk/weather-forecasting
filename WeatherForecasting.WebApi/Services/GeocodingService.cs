@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
-using WeatherForecasting.WebApi.Models.Requests;
-using WeatherForecasting.WebApi.Models.Response;
+using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
+using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 namespace WeatherForecasting.WebApi.Services
 {

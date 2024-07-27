@@ -1,14 +1,14 @@
-﻿namespace WeatherForecasting.WebApi.Models.Requests
+﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Request
 {
-	public record GeocodingRequest(string CityName, string StateCode, string CountryCode, int Limit) : IQueryParametersRequest
+	public record GeocodingRequest(string CityName, string State, string CountryCode, int Limit) : IQueryParametersRequest
 	{
 		public Dictionary<string, string> ToQueryParametersDictionary()
 		{
 			var result = new Dictionary<string, string>();
 			var locationQuery = CityName;
-			if (!string.IsNullOrWhiteSpace(StateCode) && !string.IsNullOrWhiteSpace(CountryCode))
+			if (!string.IsNullOrWhiteSpace(State) && !string.IsNullOrWhiteSpace(CountryCode))
 			{
-				locationQuery += $",{StateCode},{CountryCode}";
+				locationQuery += $",{State},{CountryCode}";
 			}
 			else if (!string.IsNullOrWhiteSpace(CountryCode))
 			{

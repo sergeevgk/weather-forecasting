@@ -1,4 +1,4 @@
-﻿namespace WeatherForecasting.WebApi.Models.Response;
+﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 using System.Text.Json.Serialization;
 
