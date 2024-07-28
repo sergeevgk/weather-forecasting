@@ -2,7 +2,7 @@
 
 namespace WeatherForecasting.WebApi.Models.Contract.Response;
 
-public class Wind
+public struct Wind
 {
 	[JsonProperty("speed")]
 	public double Speed { get; set; }

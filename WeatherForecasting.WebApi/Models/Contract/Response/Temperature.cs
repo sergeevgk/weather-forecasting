@@ -2,8 +2,7 @@
 
 namespace WeatherForecasting.WebApi.Models.Contract.Response;
 
-
-public class Temperature
+public struct Temperature
 {
 	[JsonProperty("value")]
 	public double Value { get; set; }
