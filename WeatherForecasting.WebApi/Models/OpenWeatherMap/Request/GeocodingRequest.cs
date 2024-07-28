@@ -1,6 +1,6 @@
 ﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 
-public record GeocodingRequest(string CityName, string StateCode, string CountryCode, int Limit) : IQueryParametersRequest
+public record GeocodingRequest(string CityName, string CountryCode = "", string StateCode = "", int Limit = 1) : IQueryParametersRequest
 {
 	public Dictionary<string, string> ToQueryParametersDictionary()
 	{

@@ -3,7 +3,7 @@
 namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 
-public class Coordinates
+public struct Coordinates
 {
 	[JsonProperty("lon")]
 	public decimal Lon { get; set; }
