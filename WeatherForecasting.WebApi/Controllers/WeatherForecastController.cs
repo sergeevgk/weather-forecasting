@@ -123,10 +123,10 @@ namespace WeatherForecasting.WebApi.Controllers
 				return badResponseResult;
 			}
 
-			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
+			var geocodingResponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
-			var utcRequestDateTime = _timeService.GetUtcDateTimeByCoordinates(requestDate, geocodingReponse.Lat, geocodingReponse.Lon);
-			var forecastRequest = new WeatherForecastRequestByDate(geocodingReponse.Lat, geocodingReponse.Lon, requestDate, utcRequestDateTime);
+			var utcRequestDateTime = _timeService.GetUtcDateTimeByCoordinates(requestDate, geocodingResponse.Lat, geocodingResponse.Lon);
+			var forecastRequest = new WeatherForecastRequestByDate(geocodingResponse.Lat, geocodingResponse.Lon, requestDate, utcRequestDateTime);
 			var weatherValidationResult = _weatherDateValidator.Validate(forecastRequest);
 			if (!weatherValidationResult.IsValid)
 			{
@@ -165,9 +165,9 @@ namespace WeatherForecasting.WebApi.Controllers
 				return badResponseResult;
 			}
 
-			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
+			var geocodingResponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
-			var forecastRequest = new WeatherForecastRequest(geocodingReponse.Lat, geocodingReponse.Lon, limit);
+			var forecastRequest = new WeatherForecastRequest(geocodingResponse.Lat, geocodingResponse.Lon, limit);
 			var weatherValidationResult = _weatherValidator.Validate(forecastRequest);
 			if (!geoValidationResult.IsValid)
 			{

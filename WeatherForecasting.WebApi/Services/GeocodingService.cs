@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+using System.Text.Json;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
@@ -11,24 +12,41 @@ namespace WeatherForecasting.WebApi.Services
 		private readonly ILogger<GeocodingService> _logger;
 		private readonly HttpClient _client;
 		private readonly OpenWeatherMapSettings _settings;
+		private readonly IDistributedCache _cache;
 
-		public GeocodingService(ILogger<GeocodingService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings)
+		public GeocodingService(ILogger<GeocodingService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings, IDistributedCache cache)
 		{
 			_client = httpClientFactory?.CreateClient("GeocodingClient") ?? throw new ArgumentNullException(nameof(httpClientFactory));
-			_logger = logger;
-			_settings = settings.Value;
+			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
+			_settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
+			_cache = cache ?? throw new ArgumentNullException(nameof(cache));
 		}
 
 		public async Task<GeocodingResponse> GetGeocodingCoordinatesByLocationAsync(GeocodingRequest request)
 		{
+			var cacheKey = $"Geo:{request.CityName}:{request.StateCode}:{request.CountryCode}";
+			var cachedGeoResponse = await _cache.GetAsync(cacheKey);
+			GeocodingResponse result;
+			if (cachedGeoResponse != null)
+			{
+				result = JsonSerializer.Deserialize<GeocodingResponse>(cachedGeoResponse);
+				return result;
+			}
+
 			var queryString = BuildRequestQueryString(request.ToQueryParametersDictionary());
 
 			var response = await _client.GetAsync(queryString);
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var resultArray = JsonConvert.DeserializeObject<GeocodingResponse[]>(content);
-			var result = resultArray.FirstOrDefault();
+			var resultArray = Newtonsoft.Json.JsonConvert.DeserializeObject<GeocodingResponse[]>(content);
+			result = resultArray.FirstOrDefault();
+
+			var cacheEntryOptions = new DistributedCacheEntryOptions
+			{
+				AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(30)
+			};
+			await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), cacheEntryOptions);
 
 			return result;
 		}

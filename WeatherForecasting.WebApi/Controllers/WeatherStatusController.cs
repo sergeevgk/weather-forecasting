@@ -67,9 +67,9 @@ namespace WeatherForecasting.WebApi.Controllers
 				return badResponseResult;
 			}
 
-			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
+			var geocodingResponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
-			var statusRequest = new WeatherStatusRequest(geocodingReponse.Lat, geocodingReponse.Lon);
+			var statusRequest = new WeatherStatusRequest(geocodingResponse.Lat, geocodingResponse.Lon);
 			var result = await _statusService.GetWeatherStatusAsync(statusRequest);
 
 			_logger.LogInformation($"{nameof(WeatherStatusController)}. Finish request {nameof(ByLocation)}");

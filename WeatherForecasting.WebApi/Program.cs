@@ -39,6 +39,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<WeatherRequestValidator>();
 
 builder.Services.AddAutoMapper(typeof(WeatherMappingProfile));
 
+builder.AddRedisDistributedCache("cache");
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();

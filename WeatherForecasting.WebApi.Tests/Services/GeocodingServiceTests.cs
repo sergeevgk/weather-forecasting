@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Newtonsoft.Json;
@@ -17,6 +18,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 		private Mock<ILogger<GeocodingService>> _mockLogger;
 		private Mock<IOptions<OpenWeatherMapSettings>> _mockSettings;
 		private Dictionary<string, List<GeocodingResponse>> _requestResponseDictionary;
+		private Mock<IDistributedCache> _mockCache;
 
 		[SetUp]
 		public void Setup()
@@ -65,6 +67,8 @@ namespace WeatherForecasting.WebApi.Tests.Services
 					BaseUri = ""
 				});
 			_mockLogger = new Mock<ILogger<GeocodingService>>();
+			_mockCache = new Mock<IDistributedCache>();
+			_mockCache.Setup(c => c.GetAsync(It.IsAny<string>(), default)).ReturnsAsync((byte[])null);
 		}
 
 		[TestCase("emptyResponse", TestName = "Select first response from several responses from external API")]
@@ -82,7 +86,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 					Content = new StringContent(serializedExpectedResponse)
 				});
 
-			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object);
+			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object, _mockCache.Object);
 			var request = new GeocodingRequest(queryString);
 
 			//Act
@@ -113,7 +117,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 					Content = new StringContent(serializedExpectedResponse)
 				});
 
-			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object);
+			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object, _mockCache.Object);
 			var request = new GeocodingRequest("test");
 
 			//Act, Assert
@@ -128,7 +132,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 				.Setup(h => h.Send(It.IsAny<HttpRequestMessage>()))
 				.Throws(() => new TimeoutException("External service did not repond."));
 
-			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object);
+			var service = new GeocodingService(_mockLogger.Object, _mockHttpCLientFactory.Object, _mockSettings.Object, _mockCache.Object);
 			var request = new GeocodingRequest("test");
 
 			//Act, Assert
