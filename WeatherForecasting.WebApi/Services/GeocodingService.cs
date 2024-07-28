@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
-using System.Text.Json;
+using Newtonsoft.Json;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
@@ -8,7 +8,6 @@ namespace WeatherForecasting.WebApi.Services
 {
 	public class GeocodingService : IGeocodingService
 	{
-		private readonly JsonSerializerOptions _serializationOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 		private readonly ILogger<GeocodingService> _logger;
 		private readonly HttpClient _client;
 		private readonly OpenWeatherMapSettings _settings;
@@ -28,7 +27,7 @@ namespace WeatherForecasting.WebApi.Services
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var resultArray = JsonSerializer.Deserialize<GeocodingResponse[]>(content, _serializationOptions);
+			var resultArray = JsonConvert.DeserializeObject<GeocodingResponse[]>(content);
 			var result = resultArray.FirstOrDefault();
 
 			return result;

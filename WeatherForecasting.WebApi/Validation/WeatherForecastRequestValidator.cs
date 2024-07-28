@@ -3,7 +3,7 @@ using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
 
 namespace WeatherForecasting.WebApi.Validation
 {
-	public class WeatherForecastRequestValidator : AbstractValidator<WeatherForecastRequest>
+	public class WeatherForecastRequestValidator : AbstractValidator<WeatherForecastRequestByDate>
 	{
 		private const int MAX_DAYS_FORECAST = 5;
 		public WeatherForecastRequestValidator()

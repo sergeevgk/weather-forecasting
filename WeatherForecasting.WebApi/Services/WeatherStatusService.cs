@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
-using System.Text.Json;
+using Newtonsoft.Json;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Request;
-using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
-using WeatherForecasting.WebApi.Models.Contract.Response;
 
 namespace WeatherForecasting.WebApi.Services
 {
 	public class WeatherStatusService : IWeatherStatusService
 	{
-		private readonly JsonSerializerOptions _serializationOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 		private readonly ILogger<WeatherStatusService> _logger;
 		private readonly HttpClient _client;
 		private readonly OpenWeatherMapSettings _settings;
@@ -32,7 +29,7 @@ namespace WeatherForecasting.WebApi.Services
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync();
-			var weatherStatusReponse = JsonSerializer.Deserialize<Models.OpenWeatherMap.Response.WeatherStatusResponse>(content, _serializationOptions);
+			var weatherStatusReponse = JsonConvert.DeserializeObject<Models.OpenWeatherMap.Response.WeatherStatusResponse>(content);
 
 			var result = _mapper.Map<Models.Contract.Response.WeatherStatusResponse>(weatherStatusReponse);
 			return result;
