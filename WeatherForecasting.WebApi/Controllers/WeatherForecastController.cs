@@ -124,9 +124,9 @@ namespace WeatherForecasting.WebApi.Controllers
 
 			var forecastRequest = new WeatherForecastRequestByDate(geocodingReponse.Lat, geocodingReponse.Lon, requestDate);
 			var weatherValidationResult = _weatherDateValidator.Validate(forecastRequest);
-			if (!geoValidationResult.IsValid)
+			if (!weatherValidationResult.IsValid)
 			{
-				var errorMessageAggregated = string.Join(",", geoValidationResult.Errors);
+				var errorMessageAggregated = string.Join(",", weatherValidationResult.Errors);
 				var badRequestResult = TypedResults.BadRequest($"The provided parameters are invalid: {errorMessageAggregated}");
 
 				return badRequestResult;

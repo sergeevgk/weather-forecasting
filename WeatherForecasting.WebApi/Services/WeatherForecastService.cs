@@ -46,9 +46,14 @@ namespace WeatherForecasting.WebApi.Services
 			var content = await response.Content.ReadAsStringAsync();
 			var forecastReponse = JsonConvert.DeserializeObject<Models.OpenWeatherMap.Response.WeatherForecastResponse>(content);
 
+			var lat = forecastReponse.City.Coordinates.Lat;
+			var lon = forecastReponse.City.Coordinates.Lon;
+			var localTimeZone = TimeZoneService.GetLocalTimeZoneByCoordinates(lat, lon);
+			var requestDateTimeDate = request.Date.ToDateTime(new TimeOnly(0)).Date;
 			if (request.Date != DateOnly.MinValue)
 			{
-				forecastReponse.List = forecastReponse.List.Where(forecastItem => forecastItem.ForecastDateTime.Date == request.UtcDateTime.Date).ToList();
+				forecastReponse.List = forecastReponse.List
+					.Where(forecastItem => TimeZoneService.GetLocalDateTimeByTimeZone(forecastItem.ForecastDateTime, localTimeZone).Date == requestDateTimeDate).ToList();
 			}
 			var result = _mapper.Map<Models.Contract.Response.WeatherForecastResponse>(forecastReponse);
 
