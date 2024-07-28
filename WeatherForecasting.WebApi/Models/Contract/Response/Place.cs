@@ -1,18 +1,19 @@
-﻿namespace WeatherForecasting.WebApi.Models.Contract.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.Contract.Response;
+
 
 public class Place
 {
-	[JsonPropertyName("city")]
+	[JsonProperty("city")]
 	public string City { get; set; }
 
-	[JsonPropertyName("countryCode")]
+	[JsonProperty("countryCode")]
 	public string CountryCode { get; set; }
 
-	[JsonPropertyName("lon")]
+	[JsonProperty("lon")]
 	public decimal Longitude { get; set; }
 
-	[JsonPropertyName("lat")]
+	[JsonProperty("lat")]
 	public decimal Latitude { get; set; }
 }

@@ -1,9 +1,10 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+
 
 public class Clouds
 {
-	[JsonPropertyName("all")]
+	[JsonProperty("all")]
 	public int All { get; set; }
 }

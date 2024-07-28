@@ -1,12 +1,13 @@
-﻿namespace WeatherForecasting.WebApi.Models.Contract.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.Contract.Response;
+
 
 public class Temperature
 {
-	[JsonPropertyName("value")]
+	[JsonProperty("value")]
 	public double Value { get; set; }
 
-	[JsonPropertyName("feels_like")]
+	[JsonProperty("feels_like")]
 	public double FeelsLike { get; set; }
 }

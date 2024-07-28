@@ -1,21 +1,21 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 public class SysInformation
 {
-	[JsonPropertyName("type")]
+	[JsonProperty("type")]
 	public int Type { get; set; }
 
-	[JsonPropertyName("id")]
+	[JsonProperty("id")]
 	public int Id { get; set; }
 
-	[JsonPropertyName("country")]
+	[JsonProperty("country")]
 	public string Country { get; set; }
 
-	[JsonPropertyName("sunrise")]
+	[JsonProperty("sunrise")]
 	public long Sunrise { get; set; }
 
-	[JsonPropertyName("sunset")]
+	[JsonProperty("sunset")]
 	public long Sunset { get; set; }
 }

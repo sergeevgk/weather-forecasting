@@ -1,9 +1,13 @@
-﻿namespace WeatherForecasting.WebApi.Models.Contract.Response
+﻿using Newtonsoft.Json;
+
+namespace WeatherForecasting.WebApi.Models.Contract.Response;
+
+public class WeatherForecastItem
 {
-	public class WeatherForecastItem
-	{
-		public DateTime LocalTime { get; set; }
-		public WeatherSummary WeatherSummary { get; set; }
-		public Wind Wind { get; set; }
-	}
+	[JsonProperty("local_time")]
+	public DateTime LocalTime { get; set; }
+	[JsonProperty("summary")]
+	public WeatherSummary WeatherSummary { get; set; }
+	[JsonProperty("wind")]
+	public Wind Wind { get; set; }
 }

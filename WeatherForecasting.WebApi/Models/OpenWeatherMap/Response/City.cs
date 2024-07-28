@@ -1,31 +1,30 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
-namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+
+public class City
 {
-	public class City
-	{
-		[JsonPropertyName("id")]
-		public int Id { get; set; }
+	[JsonProperty("id")]
+	public int Id { get; set; }
 
-		[JsonPropertyName("name")]
-		public string Name { get; set; }
+	[JsonProperty("name")]
+	public string Name { get; set; }
 
-		[JsonPropertyName("coord")]
-		public Coordinates Coordinates { get; set; }
+	[JsonProperty("coord")]
+	public Coordinates Coordinates { get; set; }
 
-		[JsonPropertyName("country")]
-		public string Country { get; set; }
+	[JsonProperty("country")]
+	public string Country { get; set; }
 
-		[JsonPropertyName("population")]
-		public int Population { get; set; }
+	[JsonProperty("population")]
+	public int Population { get; set; }
 
-		[JsonPropertyName("timezone")]
-		public int Timezone { get; set; }
+	[JsonProperty("timezone")]
+	public int Timezone { get; set; }
 
-		[JsonPropertyName("sunrise")]
-		public long Sunrise { get; set; }
+	[JsonProperty("sunrise")]
+	public long Sunrise { get; set; }
 
-		[JsonPropertyName("sunset")]
-		public long Sunset { get; set; }
-	}
+	[JsonProperty("sunset")]
+	public long Sunset { get; set; }
 }

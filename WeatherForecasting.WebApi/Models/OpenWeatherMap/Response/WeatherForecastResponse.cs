@@ -1,23 +1,22 @@
-﻿using System.Drawing;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
 	public class WeatherForecastResponse
 	{
-		[JsonPropertyName("cod")]
+		[JsonProperty("cod")]
 		public string Cod { get; set; }
 
-		[JsonPropertyName("message")]
+		[JsonProperty("message")]
 		public int Message { get; set; }
 
-		[JsonPropertyName("cnt")]
+		[JsonProperty("cnt")]
 		public int Cnt { get; set; }
 
-		[JsonPropertyName("list")]
+		[JsonProperty("list")]
 		public List<WeatherForecastItem> List { get; set; }
 
-		[JsonPropertyName("city")]
+		[JsonProperty("city")]
 		public City City { get; set; }
 	}
 }

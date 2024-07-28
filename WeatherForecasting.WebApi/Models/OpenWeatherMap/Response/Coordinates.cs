@@ -1,12 +1,13 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+
 
 public class Coordinates
 {
-	[JsonPropertyName("lon")]
+	[JsonProperty("lon")]
 	public decimal Lon { get; set; }
 
-	[JsonPropertyName("lat")]
+	[JsonProperty("lat")]
 	public decimal Lat { get; set; }
 }

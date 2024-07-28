@@ -1,18 +1,18 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 public class Weather
 {
-	[JsonPropertyName("id")]
+	[JsonProperty("id")]
 	public int Id { get; set; }
 
-	[JsonPropertyName("main")]
+	[JsonProperty("main")]
 	public string Main { get; set; }
 
-	[JsonPropertyName("description")]
+	[JsonProperty("description")]
 	public string Description { get; set; }
 
-	[JsonPropertyName("icon")]
+	[JsonProperty("icon")]
 	public string Icon { get; set; }
 }

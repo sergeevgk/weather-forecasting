@@ -1,30 +1,30 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 public class MainWeatherInformation
 {
-	[JsonPropertyName("temp")]
+	[JsonProperty("temp")]
 	public double Temp { get; set; }
 
-	[JsonPropertyName("feels_like")]
+	[JsonProperty("feels_like")]
 	public double FeelsLike { get; set; }
 
-	[JsonPropertyName("temp_min")]
+	[JsonProperty("temp_min")]
 	public double TempMin { get; set; }
 
-	[JsonPropertyName("temp_max")]
+	[JsonProperty("temp_max")]
 	public double TempMax { get; set; }
 
-	[JsonPropertyName("pressure")]
+	[JsonProperty("pressure")]
 	public int Pressure { get; set; }
 
-	[JsonPropertyName("humidity")]
+	[JsonProperty("humidity")]
 	public int Humidity { get; set; }
 
-	[JsonPropertyName("sea_level")]
+	[JsonProperty("sea_level")]
 	public int SeaLevel { get; set; }
 
-	[JsonPropertyName("grnd_level")]
+	[JsonProperty("grnd_level")]
 	public int GrndLevel { get; set; }
 }

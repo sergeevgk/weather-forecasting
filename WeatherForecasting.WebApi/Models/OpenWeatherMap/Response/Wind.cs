@@ -1,15 +1,15 @@
-﻿namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 
 public class Wind
 {
-	[JsonPropertyName("speed")]
+	[JsonProperty("speed")]
 	public double Speed { get; set; }
 
-	[JsonPropertyName("deg")]
+	[JsonProperty("deg")]
 	public int Deg { get; set; }
 
-	[JsonPropertyName("gust")]
+	[JsonProperty("gust")]
 	public double Gust { get; set; }
 }

@@ -1,12 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace WeatherForecasting.WebApi.Models.Contract.Response;
 
 public class WeatherForecastResponse
 {
-	[JsonPropertyName("place")]
+	[JsonProperty("place")]
 	public Place Place { get; set; }
 
-	[JsonPropertyName("forecasts")]
+	[JsonProperty("forecasts")]
 	public WeatherForecastItem[] Forecasts { get; set; }
 }

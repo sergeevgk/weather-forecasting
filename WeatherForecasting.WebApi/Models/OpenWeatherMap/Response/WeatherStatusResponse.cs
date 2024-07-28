@@ -1,35 +1,34 @@
 ﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 {
 	public class WeatherStatusResponse
 	{
-		[JsonPropertyName("coord")]
+		[JsonProperty("coord")]
 		public Coordinates Coord { get; set; }
 
-		[JsonPropertyName("weather")]
+		[JsonProperty("weather")]
 		public List<Weather> Weather { get; set; }
 
-		[JsonPropertyName("base")]
+		[JsonProperty("base")]
 		public string Base { get; set; }
 
-		[JsonPropertyName("main")]
+		[JsonProperty("main")]
 		public MainWeatherInformation MainInfo { get; set; }
 
-		[JsonPropertyName("visibility")]
+		[JsonProperty("visibility")]
 		public int Visibility { get; set; }
 
-		[JsonPropertyName("wind")]
+		[JsonProperty("wind")]
 		public Wind Wind { get; set; }
 
-		[JsonPropertyName("clouds")]
+		[JsonProperty("clouds")]
 		public Clouds Clouds { get; set; }
 
-		[JsonPropertyName("dt")]
+		[JsonProperty("dt")]
 		public long UnixTimestampUtc { get; set; }
 
-		[JsonPropertyName("sys")]
+		[JsonProperty("sys")]
 		public SysInformation Sys { get; set; }
 
 		[JsonProperty("rain")]
@@ -39,16 +38,16 @@ namespace WeatherForecasting.WebApi.Models.OpenWeatherMap.Response
 		public Snow Snow { get; set; }
 
 
-		[JsonPropertyName("timezone")]
+		[JsonProperty("timezone")]
 		public int Timezone { get; set; }
 
-		[JsonPropertyName("id")]
+		[JsonProperty("id")]
 		public int Id { get; set; }
 
-		[JsonPropertyName("name")]
+		[JsonProperty("name")]
 		public string Name { get; set; }
 
-		[JsonPropertyName("cod")]
+		[JsonProperty("cod")]
 		public int Cod { get; set; }
 	}
 

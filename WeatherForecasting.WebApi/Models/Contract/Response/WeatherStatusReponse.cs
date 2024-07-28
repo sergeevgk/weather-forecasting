@@ -1,19 +1,18 @@
-﻿namespace WeatherForecasting.WebApi.Models.Contract.Response;
+﻿using Newtonsoft.Json;
 
-using System;
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.Contract.Response;
 
 public class WeatherStatusResponse
 {
-	[JsonPropertyName("status_time")]
+	[JsonProperty("status_time")]
 	public DateTime StatusLocalTime { get; set; }
 
-	[JsonPropertyName("place")]
+	[JsonProperty("place")]
 	public Place Place { get; set; }
 
-	[JsonPropertyName("weather_summary")]
+	[JsonProperty("weather_summary")]
 	public WeatherSummary WeatherSummary { get; set; }
 
-	[JsonPropertyName("wind")]
+	[JsonProperty("wind")]
 	public Wind Wind { get; set; }
 }

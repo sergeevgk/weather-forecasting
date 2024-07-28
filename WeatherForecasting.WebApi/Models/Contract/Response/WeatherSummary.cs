@@ -1,37 +1,37 @@
-﻿namespace WeatherForecasting.WebApi.Models.Contract.Response;
+﻿using Newtonsoft.Json;
 
-using System.Text.Json.Serialization;
+namespace WeatherForecasting.WebApi.Models.Contract.Response;
 
 public class WeatherSummary
 {
-	[JsonPropertyName("main")]
+	[JsonProperty("main")]
 	public string Main { get; set; }
 
-	[JsonPropertyName("description")]
+	[JsonProperty("description")]
 	public string Description { get; set; }
 
-	[JsonPropertyName("temperature")]
+	[JsonProperty("temperature")]
 	public Temperature Temperature { get; set; }
 
-	[JsonPropertyName("pressure")]
+	[JsonProperty("pressure")]
 	public int Pressure { get; set; }
 
-	[JsonPropertyName("humidity")]
+	[JsonProperty("humidity")]
 	public int Humidity { get; set; }
 
-	[JsonPropertyName("cloudy_percentage")]
+	[JsonProperty("cloudy_percentage")]
 	public int CloudyPercentage { get; set; }
 
-	[JsonPropertyName("rain_volume_3h")]
+	[JsonProperty("rain_volume_3h")]
 	public double RainVolume3Hour { get; set; }
 
-	[JsonPropertyName("rain_volume_1h")]
+	[JsonProperty("rain_volume_1h")]
 	public double RainVolume1Hour { get; set; }
 
-	[JsonPropertyName("snow_volume_3h")]
+	[JsonProperty("snow_volume_3h")]
 	public double SnowVolume3Hour { get; set; }
 
-	[JsonPropertyName("snow_volume_1h")]
+	[JsonProperty("snow_volume_1h")]
 	public double SnowVolume1Hour { get; set; }
 
 }
