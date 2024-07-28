@@ -3,9 +3,9 @@ using TimeZoneConverter;
 
 namespace WeatherForecasting.WebApi.Services
 {
-	public static class TimeZoneService
+	public class TimeZoneService: ITimeZoneService
 	{
-		public static TimeZoneInfo GetLocalTimeZoneByCoordinates(decimal latitude, decimal longitude)
+		public TimeZoneInfo GetLocalTimeZoneByCoordinates(decimal latitude, decimal longitude)
 		{
 			string timeZoneIana = TimeZoneLookup.GetTimeZone((double)latitude, (double)longitude).Result;
 			TimeZoneInfo result = TZConvert.GetTimeZoneInfo(timeZoneIana);
@@ -13,7 +13,7 @@ namespace WeatherForecasting.WebApi.Services
 			return result;
 		}
 
-		public static DateTime GetLocalDateTimeByTimeZone(DateTime utcDateTime, TimeZoneInfo timeZone)
+		public DateTime GetLocalDateTimeByTimeZone(DateTime utcDateTime, TimeZoneInfo timeZone)
 		{
 			utcDateTime = DateTime.SpecifyKind(utcDateTime, DateTimeKind.Utc);
 			var result = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
@@ -22,7 +22,7 @@ namespace WeatherForecasting.WebApi.Services
 		}
 
 
-		public static DateTime GetLocalDateTimeByCoordinates(DateTime utcDateTime, decimal latitude, decimal longitude)
+		public DateTime GetLocalDateTimeByCoordinates(DateTime utcDateTime, decimal latitude, decimal longitude)
 		{
 			string timeZoneIana = TimeZoneLookup.GetTimeZone((double)latitude, (double)longitude).Result;
 			TimeZoneInfo tzInfo = TZConvert.GetTimeZoneInfo(timeZoneIana);
@@ -31,7 +31,7 @@ namespace WeatherForecasting.WebApi.Services
 			return result;
 		}
 
-		public static DateTime GetUtcDateTimeByCoordinates(DateTime localDateTime, decimal latitude, decimal longitude)
+		public DateTime GetUtcDateTimeByCoordinates(DateTime localDateTime, decimal latitude, decimal longitude)
 		{
 			string timeZoneIana = TimeZoneLookup.GetTimeZone((double)latitude, (double)longitude).Result;
 			TimeZoneInfo tzInfo = TZConvert.GetTimeZoneInfo(timeZoneIana);

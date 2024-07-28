@@ -1,12 +1,9 @@
-﻿namespace WeatherForecasting.WebApi.Mapping;
-
-using AutoMapper;
-using Newtonsoft.Json;
-using System;
-using WeatherForecasting.WebApi.Helpers;
+﻿using AutoMapper;
 using WeatherForecasting.WebApi.Models.Contract.Response;
 using WeatherForecasting.WebApi.Models.OpenWeatherMap.Response;
 using WeatherForecasting.WebApi.Services;
+
+namespace WeatherForecasting.WebApi.Mapping;
 
 public class WeatherMappingProfile : Profile
 {
@@ -56,7 +53,7 @@ public class WeatherMappingProfile : Profile
 		CreateMap<Models.OpenWeatherMap.Response.Wind, Models.Contract.Response.Wind>();
 
 		CreateMap<Models.OpenWeatherMap.Response.WeatherStatusResponse, Models.Contract.Response.WeatherStatusResponse>()
-			.ForMember(dest => dest.StatusLocalTime, opt => opt.MapFrom(src => MapUtcTimestampToLocalTime(src.UnixTimestampUtc, src.Coord.Lat, src.Coord.Lon)))
+			.ForMember(dest => dest.StatusUtcTime, opt => opt.MapFrom(src => DateTimeOffset.FromUnixTimeSeconds(src.UnixTimestampUtc).DateTime))
 			.ForMember(dest => dest.Place, opt => opt.MapFrom(src => src))
 			.ForMember(dest => dest.WeatherSummary, opt => opt.MapFrom(src => src))
 			.ForMember(dest => dest.Wind, opt => opt.MapFrom(src => src.Wind))
@@ -76,6 +73,7 @@ public class WeatherMappingProfile : Profile
 		CreateMap<Models.OpenWeatherMap.Response.WeatherForecastItem, Models.Contract.Response.WeatherForecastItem>()
 			.ForMember(dest => dest.WeatherSummary, opt => opt.MapFrom(src => src))
 			.ForMember(dest => dest.Wind, opt => opt.MapFrom(src => src.Wind))
+			.ForMember(dest => dest.UtcTime, opt => opt.MapFrom(src => src.ForecastDateTime))
 			.AfterMap((src, dest) =>
 			{
 				if (src.Weather != null && src.Weather.Count > 0)
@@ -88,21 +86,6 @@ public class WeatherMappingProfile : Profile
 
 		CreateMap<Models.OpenWeatherMap.Response.WeatherForecastResponse, Models.Contract.Response.WeatherForecastResponse>()
 			.ForMember(dest => dest.Place, opt => opt.MapFrom(src => src.City))
-			.ForMember(dest => dest.Forecasts, opt => opt.MapFrom(src => src.List))
-			.AfterMap((src, dest) =>
-			{
-				for (int i = 0; i < src.List.Count; i++)
-				{
-					dest.Forecasts[i].LocalTime = TimeZoneService.GetLocalDateTimeByCoordinates(src.List[i].ForecastDateTime, src.City.Coordinates.Lat, src.City.Coordinates.Lon);
-				}
-			});
-	}
-
-	private static DateTime MapUtcTimestampToLocalTime(long unixTimestampUtc, decimal lat, decimal lon)
-	{
-		var utcTime = DateTimeOffset.FromUnixTimeSeconds(unixTimestampUtc).DateTime;
-		var localTime = TimeZoneService.GetLocalDateTimeByCoordinates(utcTime, lat, lon);
-
-		return localTime;
+			.ForMember(dest => dest.Forecasts, opt => opt.MapFrom(src => src.List));
 	}
 }

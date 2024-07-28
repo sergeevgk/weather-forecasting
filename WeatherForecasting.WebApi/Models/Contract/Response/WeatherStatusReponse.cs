@@ -7,6 +7,9 @@ public class WeatherStatusResponse
 	[JsonProperty("status_time")]
 	public DateTime StatusLocalTime { get; set; }
 
+	[JsonProperty("status_time_utc")]
+	public DateTime StatusUtcTime { get; set; }
+
 	[JsonProperty("place")]
 	public Place Place { get; set; }
 

@@ -6,6 +6,8 @@ public class WeatherForecastItem
 {
 	[JsonProperty("local_time")]
 	public DateTime LocalTime { get; set; }
+	[JsonProperty("utc_time")]
+	public DateTime UtcTime { get; set; }
 	[JsonProperty("summary")]
 	public WeatherSummary WeatherSummary { get; set; }
 	[JsonProperty("wind")]

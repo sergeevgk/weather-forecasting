@@ -12,13 +12,15 @@ namespace WeatherForecasting.WebApi.Services
 		private readonly HttpClient _client;
 		private readonly OpenWeatherMapSettings _settings;
 		private readonly IMapper _mapper;
+		private readonly ITimeZoneService _timeZoneService;
 
-		public WeatherForecastService(ILogger<WeatherForecastService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings, IMapper mapper)
+		public WeatherForecastService(ILogger<WeatherForecastService> logger, IHttpClientFactory httpClientFactory, IOptions<OpenWeatherMapSettings> settings, IMapper mapper, ITimeZoneService timeZoneService)
 		{
 			_client = httpClientFactory?.CreateClient("WeatherForecastClient") ?? throw new ArgumentNullException(nameof(httpClientFactory));
 			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 			_settings = settings?.Value ?? throw new ArgumentNullException(nameof(settings));
 			_mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+			_timeZoneService = timeZoneService;
 		}
 
 		public async Task<Models.Contract.Response.WeatherForecastResponse> GetWeatherForecastAsync(WeatherForecastRequest request)
@@ -32,6 +34,10 @@ namespace WeatherForecasting.WebApi.Services
 			var forecastReponse = JsonConvert.DeserializeObject<Models.OpenWeatherMap.Response.WeatherForecastResponse>(content);
 
 			var result = _mapper.Map<Models.Contract.Response.WeatherForecastResponse>(forecastReponse);
+			foreach (var forecast in result.Forecasts)
+			{
+				forecast.LocalTime = _timeZoneService.GetLocalDateTimeByCoordinates(forecast.UtcTime, result.Place.Latitude, result.Place.Longitude);
+			}
 
 			return result;
 		}
@@ -46,17 +52,17 @@ namespace WeatherForecasting.WebApi.Services
 			var content = await response.Content.ReadAsStringAsync();
 			var forecastReponse = JsonConvert.DeserializeObject<Models.OpenWeatherMap.Response.WeatherForecastResponse>(content);
 
-			var lat = forecastReponse.City.Coordinates.Lat;
-			var lon = forecastReponse.City.Coordinates.Lon;
-			var localTimeZone = TimeZoneService.GetLocalTimeZoneByCoordinates(lat, lon);
-			var requestDateTimeDate = request.Date.ToDateTime(new TimeOnly(0)).Date;
-			if (request.Date != DateOnly.MinValue)
+			if (request.LocalDateTime != DateTime.MinValue)
 			{
 				forecastReponse.List = forecastReponse.List
-					.Where(forecastItem => TimeZoneService.GetLocalDateTimeByTimeZone(forecastItem.ForecastDateTime, localTimeZone).Date == requestDateTimeDate).ToList();
+					.Where(forecastItem => forecastItem.ForecastDateTime >= request.UtcDateTime && forecastItem.ForecastDateTime < request.UtcDateTime.AddDays(1)).ToList();
 			}
 			var result = _mapper.Map<Models.Contract.Response.WeatherForecastResponse>(forecastReponse);
 
+			foreach (var forecast in result.Forecasts)
+			{
+				forecast.LocalTime = _timeZoneService.GetLocalDateTimeByCoordinates(forecast.UtcTime, result.Place.Latitude, result.Place.Longitude);
+			}
 			return result;
 		}
 

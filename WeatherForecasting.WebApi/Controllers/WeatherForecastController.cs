@@ -18,15 +18,17 @@ namespace WeatherForecasting.WebApi.Controllers
 		private readonly IValidator<GeocodingRequest> _geoValidator;
 		private readonly IWeatherForecastService _forecastService;
 		private readonly IGeocodingService _geoService;
+		private readonly ITimeZoneService _timeService;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService forecastService, IGeocodingService geoService, IValidator<BaseWeatherRequest> weatherValidator, IValidator<WeatherForecastRequestByDate> weatherDateValidator, IValidator<GeocodingRequest> geoValidator)
+		public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService forecastService, IGeocodingService geoService, IValidator<BaseWeatherRequest> weatherValidator, IValidator<WeatherForecastRequestByDate> weatherDateValidator, IValidator<GeocodingRequest> geoValidator, ITimeZoneService timeService)
 		{
 			_forecastService = forecastService ?? throw new ArgumentNullException(nameof(forecastService));
 			_geoService = geoService ?? throw new ArgumentNullException(nameof(geoService));
 			_logger = logger ?? throw new ArgumentNullException(nameof(logger));
-			_weatherValidator = weatherValidator;
-			_weatherDateValidator = weatherDateValidator;
-			_geoValidator = geoValidator;
+			_weatherValidator = weatherValidator ?? throw new ArgumentNullException(nameof(weatherValidator));
+			_weatherDateValidator = weatherDateValidator ?? throw new ArgumentNullException(nameof(weatherDateValidator));
+			_geoValidator = geoValidator ?? throw new ArgumentNullException(nameof(geoValidator));
+			_timeService = timeService ?? throw new ArgumentNullException(nameof(timeService));
 		}
 
 		[ProducesResponseType(typeof(WeatherForecastResponse), (int)HttpStatusCode.OK)]
@@ -36,10 +38,10 @@ namespace WeatherForecasting.WebApi.Controllers
 		{
 			_logger.LogInformation($"{nameof(WeatherForecastController)}. Start request {nameof(ByCoordinatesAndDate)}");
 
-			DateOnly requestDate = DateOnly.MinValue;
+			DateTime requestDate = DateTime.MinValue;
 			if (!string.IsNullOrWhiteSpace(date))
 			{
-				var requestDateIsParsed = DateOnly.TryParse(date, out requestDate);
+				var requestDateIsParsed = DateTime.TryParse(date, null, System.Globalization.DateTimeStyles.RoundtripKind, out requestDate);
 				if (!requestDateIsParsed)
 				{
 					var badRequestResult = TypedResults.BadRequest($"The provided parameter is invalid: {nameof(date)} [{date}]. Please provide a valid date in format DD-MM-YYYY or omit this parameter.");
@@ -47,7 +49,8 @@ namespace WeatherForecasting.WebApi.Controllers
 				}
 			}
 
-			var request = new WeatherForecastRequestByDate(latitude, longitude, requestDate);
+			var utcRequestDateTime = _timeService.GetUtcDateTimeByCoordinates(requestDate, latitude, longitude);
+			var request = new WeatherForecastRequestByDate(latitude, longitude, requestDate, utcRequestDateTime);
 			var validationResult = _weatherDateValidator.Validate(request);
 			if (!validationResult.IsValid)
 			{
@@ -99,10 +102,10 @@ namespace WeatherForecasting.WebApi.Controllers
 		{
 			_logger.LogInformation($"{nameof(WeatherForecastController)}. Start request {nameof(ByLocationAndDate)}");
 
-			DateOnly requestDate = DateOnly.MinValue;
+			DateTime requestDate = DateTime.MinValue;
 			if (!string.IsNullOrWhiteSpace(date))
 			{
-				var requestDateIsParsed = DateOnly.TryParse(date, out requestDate);
+				var requestDateIsParsed = DateTime.TryParse(date, null, System.Globalization.DateTimeStyles.RoundtripKind, out requestDate);
 				if (!requestDateIsParsed)
 				{
 					var badRequestResult = TypedResults.BadRequest($"The provided parameter is invalid: {nameof(date)} [{date}]. Please provide a valid date in format DD-MM-YYYY or omit this parameter.");
@@ -122,7 +125,8 @@ namespace WeatherForecasting.WebApi.Controllers
 
 			var geocodingReponse = await _geoService.GetGeocodingCoordinatesByLocationAsync(geocodingRequest);
 
-			var forecastRequest = new WeatherForecastRequestByDate(geocodingReponse.Lat, geocodingReponse.Lon, requestDate);
+			var utcRequestDateTime = _timeService.GetUtcDateTimeByCoordinates(requestDate, geocodingReponse.Lat, geocodingReponse.Lon);
+			var forecastRequest = new WeatherForecastRequestByDate(geocodingReponse.Lat, geocodingReponse.Lon, requestDate, utcRequestDateTime);
 			var weatherValidationResult = _weatherDateValidator.Validate(forecastRequest);
 			if (!weatherValidationResult.IsValid)
 			{

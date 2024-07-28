@@ -15,7 +15,8 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			DateTime utcDateTime = DateTime.Parse(utcDateTimeString, null, DateTimeStyles.RoundtripKind);
 			DateTime expectedLocalDateTime = DateTime.Parse(expectedLocalDateTimeString);
 
-			DateTime actualLocalDateTime = TimeZoneService.GetLocalDateTimeByCoordinates(utcDateTime, latitude, longitude);
+			var service = new TimeZoneService();
+			DateTime actualLocalDateTime = service.GetLocalDateTimeByCoordinates(utcDateTime, latitude, longitude);
 
 			Assert.AreEqual(expectedLocalDateTime, actualLocalDateTime);
 		}
@@ -28,7 +29,8 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			DateTime localDateTime = DateTime.Parse(localDateTimeString);
 			DateTime expectedUtcDateTime = DateTime.Parse(expectedUtcDateTimeString, null, DateTimeStyles.RoundtripKind);
 
-			DateTime actualUtcDateTime = TimeZoneService.GetUtcDateTimeByCoordinates(localDateTime, latitude, longitude);
+			var service = new TimeZoneService();
+			DateTime actualUtcDateTime = service.GetUtcDateTimeByCoordinates(localDateTime, latitude, longitude);
 
 			Assert.AreEqual(expectedUtcDateTime, actualUtcDateTime);
 		}

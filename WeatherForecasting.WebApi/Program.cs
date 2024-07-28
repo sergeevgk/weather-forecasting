@@ -1,3 +1,4 @@
+using AutoMapper;
 using FluentValidation;
 using WeatherForecasting.WebApi;
 using WeatherForecasting.WebApi.Mapping;
@@ -31,6 +32,7 @@ builder.Services.AddGeocodingHttpClient();
 builder.Services.AddScoped<IWeatherStatusService, WeatherStatusService>();
 builder.Services.AddScoped<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<IGeocodingService, GeocodingService>();
+builder.Services.AddSingleton<ITimeZoneService, TimeZoneService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<WeatherRequestValidator>();
 
