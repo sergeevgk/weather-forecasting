@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using WeatherForecasting.WebApi;
 using WeatherForecasting.WebApi.Mapping;
+using WeatherForecasting.WebApi.Middleware;
 using WeatherForecasting.WebApi.ServiceExtensions;
 using WeatherForecasting.WebApi.Services;
 using WeatherForecasting.WebApi.Validation;
@@ -39,6 +40,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<WeatherRequestValidator>();
 builder.Services.AddAutoMapper(typeof(WeatherMappingProfile));
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
