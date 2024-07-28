@@ -8,6 +8,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecasting.ServiceD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecasting.WebApi", "WeatherForecasting.WebApi\WeatherForecasting.WebApi.csproj", "{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecasting.WebApi.Tests", "WeatherForecasting.WebApi.Tests\WeatherForecasting.WebApi.Tests.csproj", "{8614C34D-796F-42D2-8856-9ECC6BDF53E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B5B42BF-FAAD-4385-BEED-3E64A4BCCD65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8614C34D-796F-42D2-8856-9ECC6BDF53E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8614C34D-796F-42D2-8856-9ECC6BDF53E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8614C34D-796F-42D2-8856-9ECC6BDF53E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8614C34D-796F-42D2-8856-9ECC6BDF53E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
