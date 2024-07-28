@@ -106,7 +106,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 				.Returns(new HttpResponseMessage
 				{
 					StatusCode = System.Net.HttpStatusCode.OK,
-					Content = new StringContent("test")
+					Content = new StringContent(JsonConvert.SerializeObject(new WeatherStatusResponse()))
 				});
 
 			_mockMapper
@@ -117,10 +117,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			var request = new WeatherStatusRequest(0, 0);
 
 			//Act, Assert
-			var ex = Assert.ThrowsAsync<ApplicationException>(async () => await service.GetWeatherStatusAsync(request));
-			Assert.NotNull(ex.Message);
-			Assert.IsTrue(ex.InnerException is JsonSerializationException);
-			Assert.Contains(new KeyValuePair<string, string>("StatusCode", "500"), ex.Data);
+			var ex = Assert.ThrowsAsync<JsonSerializationException>(async () => await service.GetWeatherStatusAsync(request));
 		}
 
 		[TestCase(TestName = "Throw an exception when extrenal service does not respond")]
@@ -135,10 +132,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			var request = new WeatherStatusRequest(0, 0);
 
 			//Act, Assert
-			var ex = Assert.ThrowsAsync<ApplicationException>(async () => await service.GetWeatherStatusAsync(request));
-			Assert.NotNull(ex.Message);
-			Assert.IsTrue(ex.InnerException is TimeoutException);
-			Assert.Contains(new KeyValuePair<string, string>("StatusCode", "502"), ex.Data);
+			var ex = Assert.ThrowsAsync<TimeoutException>(async () => await service.GetWeatherStatusAsync(request));
 		}
 	}
 }

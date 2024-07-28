@@ -344,10 +344,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			var request = new WeatherForecastRequest(0, 0, 1);
 
 			//Act, Assert
-			var ex = Assert.ThrowsAsync<ApplicationException>(async () => await service.GetWeatherForecastAsync(request));
-			Assert.NotNull(ex.Message);
-			Assert.IsTrue(ex.InnerException is JsonSerializationException);
-			Assert.Contains(new KeyValuePair<string, string>("StatusCode", "500"), ex.Data);
+			var ex = Assert.ThrowsAsync<JsonSerializationException>(async () => await service.GetWeatherForecastAsync(request));
 		}
 
 		[TestCase(TestName = "Throw an exception when extrenal service does not respond")]
@@ -362,10 +359,7 @@ namespace WeatherForecasting.WebApi.Tests.Services
 			var request = new WeatherForecastRequest(0, 0, 1);
 
 			//Act, Assert
-			var ex = Assert.ThrowsAsync<ApplicationException>(async () => await service.GetWeatherForecastAsync(request));
-			Assert.NotNull(ex.Message);
-			Assert.IsTrue(ex.InnerException is TimeoutException);
-			Assert.Contains(new KeyValuePair<string, string>("StatusCode", "502"), ex.Data);
+			var ex = Assert.ThrowsAsync<TimeoutException>(async () => await service.GetWeatherForecastAsync(request));
 		}
 	}
 }
