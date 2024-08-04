@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 /WeatherForecasting.WebApi/WeatherForecasting.WebApi.http
 /WeatherForecasting.WebApi/http-client.env.json
+*.env
