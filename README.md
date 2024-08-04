@@ -13,10 +13,13 @@ Due to the free Weather API limitations at the moment supports only 3-hour forec
 5. Swagger documentation and interface are provided at {running_app_url}/swagger.
 
 #### Running in Docker/Podman:
-I used Aspir8 tool (https://github.com/prom3theu5/aspirational-manifests) to generate a docker-compose file from the Aspire project.
-This tool also builds images and publishes to your (local?) image repository so that the docker-compose command can actually run the container.
-I tried this with Podman and latest docker-compose, and it seems that it worked. 
-I will provide a more detailed description later, when I figure out the most convenient way to build this project in docker images, publish and run locally.
+1. Publish the solution and build docker/podman images. (TODO: provide a Dockerfile) 
+2. Create a .env file with 'OWM_API_KEY' environment variable and paste your Open Weather Map API key as its value. The docker-compose process will use when the .env file and docker-compose.yaml are in the same directory.
+3. Use `docker compose` or `podman compose` command to run the containerized application.
+
+P.S. I used Aspir8 tool (https://github.com/prom3theu5/aspirational-manifests) to generate a docker-compose file from the Aspire project.
+This tool also builds images and publishes to your (local?) image repository so that the docker-compose command can actually run the container. It has some difficulties with secret management at the moment, so be aware to check if your secrets are populated properly.
+
 
 
 ### Requirements and features:
