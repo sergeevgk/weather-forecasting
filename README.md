@@ -12,6 +12,16 @@ Due to the free Weather API limitations at the moment supports only 3-hour forec
 	At the moment there is no difference from running the `WatherForecasting.WebApi` project - Aspire just provides logs in a more convenient format. Later there will be Redis hosting and, hopefully, many other features. 
 5. Swagger documentation and interface are provided at {running_app_url}/swagger.
 
+#### Running in Docker/Podman:
+1. Publish the solution and build docker/podman images. (TODO: provide a Dockerfile) 
+2. Create a .env file with 'OWM_API_KEY' environment variable and paste your Open Weather Map API key as its value. The docker-compose process will use when the .env file and docker-compose.yaml are in the same directory.
+3. Use `docker compose` or `podman compose` command to run the containerized application.
+
+P.S. I used Aspir8 tool (https://github.com/prom3theu5/aspirational-manifests) to generate a docker-compose file from the Aspire project.
+This tool also builds images and publishes to your (local?) image repository so that the docker-compose command can actually run the container. It has some difficulties with secret management at the moment, so be aware to check if your secrets are populated properly.
+
+
+
 ### Requirements and features:
 
 #### Implemented
@@ -24,12 +34,11 @@ Due to the free Weather API limitations at the moment supports only 3-hour forec
 - Provide automated tests for the service (unit / integration).
 - Integrates logging (built-in logger), Application Insights (integration via Aspire, need to populated with data in WebAPI).
 - Implement caching with Redis.
-
+- Prepare the service to be containerized (Docker/Podman): added a Redis container to Aspire application model and referenced it in WeatherForecasting_WebApi. Now the application can run in a container (used Podman).
 
 #### Planned
 - Implement error handling with retries.
 - Enhance automated testing, provide more valuable test cases, implement integration tests.
-- Prepare the service to be containerized (Docker/Podman).
 - Decouple the forecast fetching service from the request handling service using a message queue (Azure Service Bus) to handle increased loads.
 - Introduce authentication API (JWT) for the service. Maybe add some user management?
 - Create a simple UI client, try to publish the API and the client in Azure. Deploy the weather forecasting service in Azure Cloud as AppService. Provide the script for Azure CLI for deployment or a Bicep file.
