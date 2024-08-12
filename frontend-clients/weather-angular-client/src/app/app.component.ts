@@ -21,7 +21,7 @@ export class AppComponent {
     let currentDateStr = new Date();
     let tomorrowDate = currentDateStr.setDate(currentDateStr.getDate() + 1);
     let tomorrowDateStr = formatDate(tomorrowDate, 'yyyy-MM-dd', "en-US");
-    http.get<WeatherForecastResponse>(`https://localhost:7208/weatherforecast?city=London&date=${tomorrowDateStr}`).subscribe({
+    http.get<WeatherForecastResponse>(`/api/weatherforecast?city=London&date=${tomorrowDateStr}`).subscribe({
       next: result => this.forecasts = result.forecasts.map(
         f => new WeatherForecast(
           formatDate(f.localTime, 'yyyy-MM-dd HH:mm', locale), 
