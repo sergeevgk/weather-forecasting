@@ -1,0 +1,26 @@
+<main class="main">
+  <div class="content">
+    <div class="weather">
+      <h1>{{ title }} app</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let forecast of forecasts; index as i;">
+            <td>{{forecast.date}}</td>
+              <td>{{forecast.temperatureC}}</td>
+              <td>{{forecast.temperatureF}}</td>
+              <td>{{forecast.summary}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<router-outlet></router-outlet>
