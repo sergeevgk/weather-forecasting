@@ -3,6 +3,7 @@
 ## Project description: 
 A small WebAPI for weather forecasting and current weather information built with .NET 8, .NET Aspire, Redis. 
 Due to the free Weather API limitations at the moment supports only 3-hour forecasts for 5 next days. The query rate limit is 60 per minute due to the same reason.
+A simple frontend web client is built with Angular. 
 
 ### Setup:
 1. Clone the repository
@@ -20,7 +21,8 @@ Due to the free Weather API limitations at the moment supports only 3-hour forec
 P.S. I used Aspir8 tool (https://github.com/prom3theu5/aspirational-manifests) to generate a docker-compose file from the Aspire project.
 This tool also builds images and publishes to your (local?) image repository so that the docker-compose command can actually run the container. It has some difficulties with secret management at the moment, so be aware to check if your secrets are populated properly.
 
-
+#### Angular frontend application
+Requires npm and node, I used npm v10.8.2 and Node v20.16.0. For client used angular packages with version 18.1.0. 
 
 ### Requirements and features:
 
