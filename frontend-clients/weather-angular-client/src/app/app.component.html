@@ -1,7 +1,19 @@
 <main class="main">
   <div class="content">
     <div class="weather">
-      <h1>{{ title }} app</h1>
+      <h1>{{ title }} forecast</h1>
+      <div class="forecast-details-form">
+        <form>
+          <mat-form-field>
+            <mat-label>Choose city</mat-label>
+            <mat-select [(ngModel)]="cityName" name="city" (selectionChange)="onSelectNewCity()">
+              @for (city of cityList; track city) {
+                <mat-option [value]="city">{{city}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
       <table>
         <thead>
           <tr>
