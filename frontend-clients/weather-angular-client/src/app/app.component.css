@@ -158,3 +158,12 @@ th,
 td {
   padding: 1rem;
 }
+
+.weather {
+  display: flex;
+  flex-direction: column;
+}
+
+.forecast-details-form {
+  padding: 1rem 0 0 0;
+}
