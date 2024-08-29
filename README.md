@@ -37,13 +37,14 @@ Requires npm and node, I used npm v10.8.2 and Node v20.16.0. For client used ang
 - Integrates logging (built-in logger), Application Insights (integration via Aspire, need to populated with data in WebAPI).
 - Implement caching with Redis.
 - Prepare the service to be containerized (Docker/Podman): added a Redis container to Aspire application model and referenced it in WeatherForecasting_WebApi. Now the application can run in a container (used Podman).
+- Create a simple UI client using the Angular franework and include in the Aspire Host as a Node.js application. Currently supports only a limited set of cities. Mostly for my frontend leaning purposes.
 
 #### Planned
 - Implement error handling with retries.
 - Enhance automated testing, provide more valuable test cases, implement integration tests.
 - Decouple the forecast fetching service from the request handling service using a message queue (Azure Service Bus) to handle increased loads.
 - Introduce authentication API (JWT) for the service. Maybe add some user management?
-- Create a simple UI client, try to publish the API and the client in Azure. Deploy the weather forecasting service in Azure Cloud as AppService. Provide the script for Azure CLI for deployment or a Bicep file.
+- Try to publish the API and the client in Azure. Deploy the weather forecasting service in Azure Cloud as AppService. Provide the script for Azure CLI for deployment or a Bicep file.
 - Implement a CI/CD pipeline for the solution with Github Actions or Azure DevOps.
 
 
