@@ -4,7 +4,7 @@
       <h1>{{ title }} forecast</h1>
       <div class="forecast-details-form">
         <form>
-          <mat-form-field>
+          <mat-form-field id="city-selector">
             <mat-label>Choose city</mat-label>
             <mat-select [(ngModel)]="cityName" name="city" (selectionChange)="onSelectNewCity()">
               @for (city of cityList; track city) {
@@ -12,9 +12,18 @@
               }
             </mat-select>
           </mat-form-field>
+          <mat-form-field id="date-selector">
+            <mat-label>Choose date</mat-label>
+            <mat-select [(ngModel)]="date" name="date" (selectionChange)="onSelectNewDate()">
+              @for (date of availableDateList; track date) {
+                <mat-option [value]="date">{{date | date}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </form>
       </div>
-      <table>
+      @if(forecasts.length > 0) {
+        <table>
         <thead>
           <tr>
             <th>Date</th>
@@ -32,6 +41,10 @@
           </tr>
         </tbody>
       </table>
+    }
+    @else {
+      <p>No data for the provided parameters.</p>
+    }
     </div>
   </div>
 </main>

@@ -8,6 +8,7 @@ import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { WeatherForecast, WeatherForecasts } from '../types/weatherForecast';
 import { WeatherForecastResponse } from '../types/weatherForecastResponse';
+import '../extensions/date.extensions'
 
 @Injectable()
 @Component({
@@ -18,26 +19,34 @@ import { WeatherForecastResponse } from '../types/weatherForecastResponse';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  MAX_FORECAST_DAYS: number = 5;
   cityName: string = "London";
+  date: Date = new Date();
   title = 'Weather';
   forecasts: WeatherForecasts = [];
   cityList: string[] = [
     "London", "Paris", "Belgrade", "Vladivostok", "Washington", "New York", "Tokyo", "Dubai", "Rome", "Moscow", "Sydney"
   ];
+  availableDateList: Date[] = [];
 
   constructor(private httpClient: HttpClient, @Inject(LOCALE_ID) private locale: string) {
     this.FetchForecasts();
+    for (let i = 1; i < this.MAX_FORECAST_DAYS; i++){
+      this.availableDateList.push(this.date.addDays(i));
+    }
   }
 
   onSelectNewCity(){
     this.FetchForecasts();
   }
 
+  onSelectNewDate(){
+    this.FetchForecasts();
+  }
+
   private FetchForecasts(){
-    let currentDateStr = new Date();
-    let tomorrowDate = currentDateStr.setDate(currentDateStr.getDate() + 1);
-    let tomorrowDateStr = formatDate(tomorrowDate, 'yyyy-MM-dd', "en-US");
-    this.httpClient.get<WeatherForecastResponse>(`/api/weatherforecast?city=${this.cityName}&date=${tomorrowDateStr}`).subscribe({
+    let dateStr = formatDate(this.date, 'yyyy-MM-dd', "en-US");
+    this.httpClient.get<WeatherForecastResponse>(`/api/weatherforecast?city=${this.cityName}&date=${dateStr}`).subscribe({
       next: result => this.forecasts = result.forecasts.map(
         f => new WeatherForecast(
           formatDate(f.localTime, 'yyyy-MM-dd HH:mm', this.locale), 
