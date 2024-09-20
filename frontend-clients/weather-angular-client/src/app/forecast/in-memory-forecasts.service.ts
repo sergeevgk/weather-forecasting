@@ -1,0 +1,261 @@
+import { InMemoryDbService } from "angular-in-memory-web-api";
+import { WeatherForecastResponse } from "../../types/weatherForecastResponse";
+import { Injectable } from "@angular/core";
+
+@Injectable({
+	providedIn: 'root'
+  })
+export class InMemoryForecastsApi implements InMemoryDbService{
+	constructor() {	}
+	createDb() {
+		let forecasts: WeatherForecastResponse[] = [
+				{
+					"place": {
+					"city": "London",
+					"countryCode": "GB",
+					"longitude": -0.13,
+					"latitude": 51.51
+					},
+					"forecasts": [
+					{
+						"localTime": "2024-08-12T01:00:00",
+						"utcTime": "2024-08-12T00:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-12T04:00:00",
+						"utcTime": "2024-08-12T03:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 194.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-12T07:00:00",
+						"utcTime": "2024-08-12T06:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 244.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					}
+				]
+				},
+			{
+					"place": {
+					"city": "Moscow",
+					"countryCode": "RU",
+					"longitude": 30,
+					"latitude": 21.51
+					},
+					"forecasts": [
+					{
+						"localTime": "2024-08-12T03:00:00",
+						"utcTime": "2024-08-12T00:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-12T06:00:00",
+						"utcTime": "2024-08-12T03:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-12T09:00:00",
+						"utcTime": "2024-08-12T06:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					}
+				]
+				},
+			{
+					"place": {
+					"city": "New York",
+					"countryCode": "US",
+					"longitude": -50.13,
+					"latitude": 41.51
+					},
+					"forecasts": [
+					{
+						"localTime": "2024-08-11T18:00:00",
+						"utcTime": "2024-08-12T00:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-11T21:00:00",
+						"utcTime": "2024-08-12T03:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					},
+			  {
+						"localTime": "2024-08-12T00:00:00",
+						"utcTime": "2024-08-12T06:00:00",
+						"weatherSummary": {
+							"main": "Clouds",
+							"description": "scattered clouds",
+							"temperature": {
+								"value": 294.39,
+								"feelsLike": 294.5
+							},
+							"pressure": 1015,
+							"humidity": 74,
+							"cloudyPercentage": 33,
+							"rainVolume3Hour": 0,
+							"rainVolume1Hour": 0,
+							"snowVolume3Hour": 0,
+							"snowVolume1Hour": 0
+						},
+						"wind": {
+							"speed": 4.53,
+							"deg": 95,
+							"gust": 12.52
+						}
+					}
+				]
+			}
+		];
+		return { forecasts };
+	}
+}

@@ -1,6 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryForecastsApi } from './forecast/in-memory-forecasts.service';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -14,5 +16,7 @@ export const appConfig: ApplicationConfig = {
       useValue: {
         subscriptSizing: 'dynamic'
       }
-    }]
+    },
+    importProvidersFrom(HttpClientInMemoryWebApiModule.forRoot(InMemoryForecastsApi, {delay: 0}))
+  ]
 };

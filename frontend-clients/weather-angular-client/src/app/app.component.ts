@@ -44,10 +44,11 @@ export class AppComponent {
     this.FetchForecasts();
   }
 
+  // /api/weatherforecast?city=${this.cityName}&date=${dateStr}`
   private FetchForecasts(){
     let dateStr = formatDate(this.date, 'yyyy-MM-dd', "en-US");
-    this.httpClient.get<WeatherForecastResponse>(`/api/weatherforecast?city=${this.cityName}&date=${dateStr}`).subscribe({
-      next: result => this.forecasts = result.forecasts.map(
+    this.httpClient.get<WeatherForecastResponse[]>(`/api/forecasts`).subscribe({
+      next: result => this.forecasts = result[0].forecasts.map(
         f => new WeatherForecast(
           formatDate(f.localTime, 'yyyy-MM-dd HH:mm', this.locale), 
           f.weatherSummary.temperature.value, 
