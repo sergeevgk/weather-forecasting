@@ -1,0 +1,21 @@
+<div class="weather-tile">
+	<div class="date-info">
+	  <div class="day">Yesterday</div>
+	  <div class="date">{{ forecast.date }}</div>
+	</div>
+	
+	<div class="weather-icon">
+	  <!-- You can conditionally display icons based on the forecast summary -->
+	  <img src="/assets/icons/cloudy-icon.png" alt="Weather Icon" />
+	</div>
+	
+	<div class="temperature">
+	  <div class="high-temp">+{{ forecast.temperatureC }}°</div>
+	  <div class="low-temp">+{{ forecast.temperatureF }}°</div>
+	</div>
+  
+	<div class="summary">
+	  {{ forecast.summary }}
+	</div>
+  </div>
+  

@@ -6,15 +6,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { WeatherForecast, WeatherForecasts } from '../types/weatherForecast';
+import { WeatherForecast, WeatherForecasts } from './forecast/forecast.model';
 import { WeatherForecastResponse } from '../types/weatherForecastResponse';
+import { ForecastComponent } from "./forecast/forecast.component";
 import '../extensions/date.extensions'
 
 @Injectable()
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatInputModule, MatSelectModule, MatFormFieldModule, FormsModule],
+  imports: [CommonModule, RouterOutlet, MatInputModule, MatSelectModule, MatFormFieldModule, FormsModule, ForecastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

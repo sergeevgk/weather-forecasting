@@ -160,6 +160,7 @@ td {
 }
 
 .weather {
+  width: 50%;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -172,6 +173,15 @@ td {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.forecasts {
+  width: 100%;
+  padding: 1rem 0 1rem 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 mat-form-field {

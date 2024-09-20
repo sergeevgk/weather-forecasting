@@ -22,29 +22,15 @@
           </mat-form-field>
         </form>
       </div>
+      
       @if(forecasts.length > 0) {
-        <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let forecast of forecasts; index as i;">
-            <td>{{forecast.date}}</td>
-              <td>{{forecast.temperatureC}}</td>
-              <td>{{forecast.temperatureF}}</td>
-              <td>{{forecast.summary}}</td>
-          </tr>
-        </tbody>
-      </table>
-    }
-    @else {
-      <p>No data for the provided parameters.</p>
-    }
+        <div class="forecasts">
+          <app-forecast [forecast]="forecast" *ngFor="let forecast of forecasts"/>
+        </div>
+      }
+      @else {
+        <p>No data for the provided parameters.</p>
+      }
     </div>
   </div>
 </main>
